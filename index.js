@@ -1,50 +1,55 @@
 function init() {
-  //put any page initialization/handlebars initialization here
-  let formTemplate = document.getElementById("recipe-form-template").innerHTML
-  let formTemplateBuild = Handlebars.compile(formTemplate)
-  document.getElementById('main').innerHTML = formTemplateBuild({ingredients: ['','','','','']})
-  Handlebars.registerPartial('recipeDetailsPartial', document.getElementById("recipe-details-partial").innerHTML)
-  Handlebars.registerHelper('displayIngredient', function(ingredient) {
-    return new Handlebars.SafeString('<li name="ingredients">' + ingredient + '</li>')
+
+  //put any page initialization/handlebars initialization here (new Handlebars) for custom helpers
+  let main = document.getElementById('main');
+  let recipeFormHTML = document.getElementById('recipe-form-template').innerHTML;
+  let templateFn = Handlebars.compile(recipeFormHTML);
+  let result = templateFn({ ingredients: ["", "", "", "", ""] });
+  main.innerHTML = result;
+  Handlebars.registerPartial('recipeDetailsPartial', document.getElementById('recipe-details-partial').innerHTML);
+  Handlebars.registerHelper('displayIngredient', function(e) {
+    e = Handlebars.Utils.escapeExpression(e);
+    let result = '<li name="ingredients">' + e + '</li>';
+    return new Handlebars.SafeString(result);
   })
-}
-
-function handleSubmit() {
-  let recipe = {}
-  let name = document.getElementById('name')
-  let description = document.getElementById('description')
-  let ingredients = document.getElementsByName('ingredients')
-  recipe.name = name.value
-  recipe.description = description.value
-  recipe.ingredients = []
-
-  for(var i=0; i < ingredients.length; i++) {
-    recipe.ingredients.push(ingredients[i].value)
-  }
-
-  let recipeTemplate = document.getElementById("recipe-template").innerHTML
-  let recipeTemplateBuild = Handlebars.compile(recipeTemplate)
-  document.getElementById('main').innerHTML = recipeTemplateBuild(recipe)
-}
-
-function displayEditForm() {
-  let recipe = {}
-  let name = document.getElementById('recipeName')
-  let description = document.getElementById('recipeDescription')
-  let ingredients = document.getElementsByName('ingredients')
-  recipe.name = name.innerHTML
-  recipe.description = description.innerHTML
-  recipe.ingredients = []
-
-  for(var i=0; i < ingredients.length; i++) {
-    recipe.ingredients.push(ingredients[i].innerHTML)
-  }
-
-  let recipeFormTemplate = document.getElementById("recipe-form-template").innerHTML
-  let recipeFormTemplateBuild = Handlebars.compile(recipeFormTemplate)
-  document.getElementById('main').innerHTML = recipeFormTemplateBuild(recipe)
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
   init()
 })
+
+function handleSubmit() {
+  let name = document.getElementById('name').value;
+  let description = document.getElementById('description').value;
+  let getIngredients = document.getElementsByName('ingredients');
+  let ingredients = [];
+  
+  let start = getIngredients.length - 5;
+  
+  for (let i = 0; i < getIngredients.length; i++) {
+    ingredients.push(getIngredients[i].value);
+  }
+
+  let main = document.getElementById('main')
+  let recipeTemplateHTML = document.getElementById('recipe-template').innerHTML;
+  let templateFn = Handlebars.compile(recipeTemplateHTML);
+  let result = templateFn({name: name, description: description, ingredients: ingredients});
+  main.innerHTML = result;
+}
+
+function displayEditForm() {
+  let name = document.getElementById('recipeName').innerHTML;
+  let description = document.getElementById('recipeDescription').innerHTML;
+  let getIngredients = document.getElementsByName("ingredients");
+  let ingredients = [];
+  
+  for (let i = 0; i < getIngredients.length; i++) {
+    ingredients.push(getIngredients[i].innerHTML);
+  }
+
+  let recipeFormTemplateHTML = document.getElementById('recipe-form-template').innerHTML
+  let templateFn = Handlebars.compile(recipeFormTemplateHTML)
+  let result = templateFn({ name: name, description: description, ingredients: ingredients })
+
+  document.querySelector('#main').innerHTML = result;
+}
