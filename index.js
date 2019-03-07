@@ -23,9 +23,9 @@ function handleSubmit() {
   let description = document.getElementById('description').value;
   let getIngredients = document.getElementsByName('ingredients');
   let ingredients = [];
-  
+
   let start = getIngredients.length - 5;
-  
+
   for (let i = 0; i < getIngredients.length; i++) {
     ingredients.push(getIngredients[i].value);
   }
@@ -42,7 +42,7 @@ function displayEditForm() {
   let description = document.getElementById('recipeDescription').innerHTML;
   let getIngredients = document.getElementsByName("ingredients");
   let ingredients = [];
-  
+
   for (let i = 0; i < getIngredients.length; i++) {
     ingredients.push(getIngredients[i].innerHTML);
   }
