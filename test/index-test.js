@@ -23,7 +23,7 @@ describe('Handlebars Templates Lab', function() {
       expect(recipeFormTemplate).toExist("Must provide a template with an id of 'recipe-form-template'")
       expect(recipeFormTemplate.type).toBe("text/x-handlebars-template", "Template must be of type text/x-handlebars-template");
     })
-    
+
     it('has a recipe template', function() {
       var recipeTemplate = document.getElementById("recipe-template")
       expect(recipeTemplate).toExist("Must provide a template with an id of 'recipe-template'")
@@ -78,7 +78,7 @@ describe('Handlebars Templates Lab', function() {
         ingredientsValues.forEach(function(ing, index){
           ingredients[index].value = ing;
         })
-        
+
         nameField.value = "Fruit Salad"
         descriptionField.value = "Yummy fruit salad"
         var spy = expect.spyOn(window.Handlebars, "compile").andCallThrough()
@@ -109,7 +109,7 @@ describe('Handlebars Templates Lab', function() {
         ingredientsValues.forEach(function(ing, index){
           ingredients[index].value = ing;
         })
-        
+
         nameField.value = "Fruit Salad"
         descriptionField.value = "Yummy fruit salad"
         // submit the form and transition to show view
@@ -128,7 +128,7 @@ describe('Handlebars Templates Lab', function() {
         ingredientsValues.forEach(function(ing, index){
           expect(ingredients[index].value).toEqual(ing, "Got: '" + ingredients[index].value + "' Expected: '" + ing + "' Make sure that the ingredients fields are pre-filled in the edit form");
         })
-        
+
         // fill in form with new values and submit
         nameField.value = "Fruity Fruit Salad"
         descriptionField.value = "Yummiest fruit salad"
